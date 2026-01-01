@@ -7,17 +7,19 @@ import minari
 
 STEPS=3000
 MODEL="expert"
-# ds = minari.load_dataset(
-#     "atari/montezumarevenge/expert-v0",
-# )
-# ep=ds[-1] # length 1204
-# ep_actions = ep.actions 
-# expert_action = ep_actions.tolist()
-# expert_action =[0]
-with open('models/path.in', 'r') as file:
-    content = file.read().strip()
-    expert_action = [int(num.strip()) for num in content.split(',')]
-# length 3086-2
+if MODEL=="expert":
+    ds = minari.load_dataset(
+        "atari/montezumarevenge/expert-v0",
+    )
+    ep=ds[-1] # length 1204
+    ep_actions = ep.actions 
+    expert_action = ep_actions.tolist()
+    expert_action =[0]
+else:
+    with open('path/path.in', 'r') as file:
+        content = file.read().strip()
+        expert_action = [int(num.strip()) for num in content.split(',')]
+    # length 3086
 env = OCAtari(
     "ALE/MontezumaRevenge-v5",
     mode="vision",
