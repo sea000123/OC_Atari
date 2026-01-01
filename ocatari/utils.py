@@ -293,14 +293,18 @@ def load_agent(opt, env=None, device="cpu"):
             agent.load_state_dict(ckpt["model_weights"])
         else:
             return None
-
+        return agent, policy
         policy = agent.draw_action
+    raise ValueError(
+        f"Unrecognized agent checkpoint path: {pth}. "
+        "Expected path to contain one of: 'dqn', 'c51', 'cleanrl'."
+    )
 
-    return agent, policy
 
 
-def draw_arrow(surface: pygame.Surface, start_pos: (float, float), end_pos: (float, float),
+def draw_arrow(surface: pygame.Surface, start_pos, end_pos,
                tip_length: int = 6, tip_width: int = 6, **kwargs):
+    # start_pos: (float, float), end_pos: (float, float),
     start_pos = np.asarray(start_pos)
     end_pos = np.asarray(end_pos)
 
@@ -323,8 +327,10 @@ def draw_arrow(surface: pygame.Surface, start_pos: (float, float), end_pos: (flo
                      end_pos=end_pos, **kwargs)
 
 
-def draw_label(surface: pygame.Surface, text: str, position: (int, int), font: pygame.font.SysFont):
-    """Renders a framed label text to a pygame surface."""
+def draw_label(surface: pygame.Surface, text: str, position, font: pygame.font.SysFont):
+    """Renders a framed label text to a pygame surface.
+    position: (int, int).
+    """
     text = font.render(text, True, (255, 255, 255), None)
     text_rect = text.get_rect()
 

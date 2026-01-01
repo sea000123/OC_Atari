@@ -22,6 +22,7 @@ seaborn
 scikit-image
 stable_baselines3
 termcolor
-# torch==2.1.0
+torch==2.1.0
 tqdm
-# gymnasium[atari, accept-rom-license]
+gymnasium[atari]
+gymnasium[accept-rom-license]
