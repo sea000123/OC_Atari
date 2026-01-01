@@ -4,8 +4,9 @@ import numpy as np
 from game_object import NoObject
 import pygame
 
+
 def detect_objects_vision(objects, obs, game_name, hud):
-    p_module = __name__.split('.')[:-1] + [game_name.lower()]
+    p_module = __name__.split('.')[:-1] + ['vision']  +[game_name.lower()]
     game_module = '.'.join(p_module)
     for obj in objects:  # saving the previsous positions
         if obj:
@@ -58,8 +59,16 @@ def to_rgba(color):
     return np.concatenate([np.array(color)/255, [.7]])
 
 def get_max_objects(game_name, hud):
-    p_module = __name__.split('.')[:-1] + [game_name.lower()]
+    p_module = __name__.split('.')[:-1] + ['vision']  +[game_name.lower()]
     game_module = '.'.join(p_module)
+    import importlib
+    try:
+        mod = importlib.import_module(game_module)
+    except ModuleNotFoundError:
+        raise KeyError(f"Game module does not exist: {game_module}")
+    if hud:
+        return mod.MAX_NB_OBJECTS_HUD
+    return mod.MAX_NB_OBJECTS
     try:
         mod = sys.modules[game_module]
         if hud:
@@ -72,7 +81,7 @@ def get_max_objects(game_name, hud):
             f"MAX_NB_OBJECTS_HUD not implemented for game: {game_name}")
 
 def get_class_dict(game_name):
-    p_module = __name__.split('.')[:-1] + [game_name.lower()]
+    p_module = __name__.split('.')[:-1] + ['vision']  +[game_name.lower()]
     game_module = '.'.join(p_module)
     try:
         mod = sys.modules[game_module]
@@ -89,7 +98,7 @@ def get_class_dict(game_name):
 # parses MAX_NB* dicts, returns default init list of objects
 def instantiate_max_objects(game_name, max_obj_dict):
     objects = []
-    p_module = __name__.split('.')[:-1] + [game_name.lower()]
+    p_module = __name__.split('.')[:-1] + ['vision']  +[game_name.lower()]
     game_module = '.'.join(p_module)
     try:
         mod = sys.modules[game_module]
@@ -120,7 +129,7 @@ def use_vision_objects(objects, game_module):
     return objects
 
 def init_objects(game_name, hud, vision=False):
-    p_module = __name__.split('.')[:-1] + [game_name.lower()]
+    p_module = __name__.split('.')[:-1] + ['vision']  +[game_name.lower()]
     game_module = '.'.join(p_module)
     try:
         mod = sys.modules[game_module]
@@ -180,29 +189,3 @@ def draw_label(surface: pygame.Surface, text: str, position, font: pygame.font.S
     # Draw text
     text_rect.topleft = position[0] + 3, position[1] + 3
     surface.blit(text, text_rect)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

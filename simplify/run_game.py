@@ -4,30 +4,30 @@ import ale_py
 gym.register_envs(ale_py)
 import cv2
 import minari
-STEPS=3000
+
+STEPS=1200
 MODEL="expert"
-# ds = minari.load_dataset(
-#     "atari/montezumarevenge/expert-v0",
-# )
-# ep=ds[-1] # length 1204
-# ep_actions = ep.actions 
-# expert_action = ep_actions.tolist()
-# expert_action =[0]
-with open('models/path.in', 'r') as file:
-    content = file.read().strip()
-    expert_action = [int(num.strip()) for num in content.split(',')]
-# length 3086-2
+if MODEL=="expert":
+    ds = minari.load_dataset(
+        "atari/montezumarevenge/expert-v0",
+    )
+    ep=ds[-1] # length 1204
+    ep_actions = ep.actions 
+    expert_action = ep_actions.tolist()
+    expert_action =[0]
+else:
+    with open('path/path.in', 'r') as file:
+        content = file.read().strip()
+        expert_action = [int(num.strip()) for num in content.split(',')]
+    # length 3086
+
 env = Montezuma(
-    "ALE/MontezumaRevenge-v5",
-    mode="vision",
     hud=False,
     render_mode="rgb_array",
     buffer_window_size=1,
 )
 
 obs, info = env.reset()
-
-# 用 render() 拿 RGB 帧
 frame = env.render()
 h, w, _ = frame.shape
 
@@ -74,4 +74,4 @@ for step in range(STEPS):
 
 video.release()
 env.close()
-print("Saved vem_visualization.mp4")
+print("Saved video.mp4")

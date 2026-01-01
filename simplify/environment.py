@@ -12,8 +12,8 @@ import gymnasium as gym
 import cv2
 import pygame
 UPSCALE_FACTOR = 6
-from vision import (
-    detect_objects_vision,mark_bb, to_rgba, get_class_dict, get_max_objects,
+from visualize import (
+    detect_objects_vision,mark_bb, get_class_dict, get_max_objects,
     get_object_state_size, init_objects, draw_label, draw_arrow)
 
 
@@ -35,7 +35,7 @@ class Montezuma(gym.Env):
         **kwargs,
     ):
         # --- fixed configuration (as requested) ---
-        self.env_name = "MontezumaRevenge-v5"
+        self.env_name = "ALE/MontezumaRevenge-v5"
         self.mode = "vision"
         self.obs_mode = "obj"
 
