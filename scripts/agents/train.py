@@ -1,7 +1,7 @@
 import sys
 from os import path
 sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__))))) # noqa
-from ocatari.environments import PositionHistoryEnv
+from Project.environment.environments import PositionHistoryEnv
 import gymnasium as gym
 from stable_baselines3.common.env_checker import check_env
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecFrameStack

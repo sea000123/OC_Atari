@@ -1,10 +1,9 @@
-from ocatari.core import OCAtari
+from environment import Montezuma
 import gymnasium as gym
 import ale_py
 gym.register_envs(ale_py)
 import cv2
 import minari
-
 STEPS=3000
 MODEL="expert"
 # ds = minari.load_dataset(
@@ -18,7 +17,7 @@ with open('models/path.in', 'r') as file:
     content = file.read().strip()
     expert_action = [int(num.strip()) for num in content.split(',')]
 # length 3086-2
-env = OCAtari(
+env = Montezuma(
     "ALE/MontezumaRevenge-v5",
     mode="vision",
     hud=False,
