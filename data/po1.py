@@ -95,7 +95,8 @@ with open(yaml_path, "w") as f:
 
 print("Done. YOLO dataset at:", OUT_DIR)
 
-''' train:
+''' 
+# train:
 yolo detect train \
   data=yolo_dataset/data.yaml \
   model=yolov8n.pt \
@@ -105,11 +106,13 @@ yolo detect train \
   workers=4 \
   device=0
 
+  # validate
 yolo detect val \
   model=runs/detect/train/weights/best.pt \
   data=yolo_dataset/data.yaml \
   imgsz=160
 
+  # visualize results
 yolo detect predict \
   model=runs/detect/train/weights/best.pt \
   source=yolo_dataset/images/val \
