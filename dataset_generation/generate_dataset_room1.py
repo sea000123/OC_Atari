@@ -95,20 +95,8 @@ frames = []
 r_objs = []
 v_objs = []
 
-# ---- actions from models/path.in (same style as code1) ----
-with open("models/path.in", "r") as f:
-    content = f.read().strip()
-
-# 支持 "1,2,3" 这种逗号分隔，也兼容换行/空格
-tokens = [t.strip() for t in content.replace("\n", ",").split(",") if t.strip() != ""]
-expert_action = [int(t) for t in tokens]
-expert_action = expert_action[:2000] *10  # 只取前 10000 个动作
-
-print(f"[path.in] loaded {len(expert_action)} actions")
-# -----------------------------------------------------------
-
 # Generate 10,000 samples
-for i in tqdm(range(2000)):
+for i in tqdm(range(10000)):
     # 取当前帧（渲染出来的 RGB）
     frame = env.render()
     g = preprocess(frame)
@@ -121,11 +109,8 @@ for i in tqdm(range(2000)):
     # print("frame", frame.shape, frame.dtype)
     # print("obs_t", obs_t.shape, obs_t.dtype, obs_t.min().item(), obs_t.max().item())
 
-    # action comes from path.in
-    if i >= len(expert_action):
-        raise IndexError(f"path.in actions not enough: need at least {i+1}, got {len(expert_action)}")
-
-    action = int(expert_action[i])
+    action, _q = policy(obs_t, eps=0.0)
+    action = int(action)
     obs, reward, terminated, truncated, info = env.step(action)
 
     # 更新 observation（你后面存数据可能还要用）

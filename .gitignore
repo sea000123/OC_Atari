@@ -40,6 +40,12 @@ pip-delete-this-directory.txt
 *.mo
 *.pot
 
+# figure
+*.jpg
+*.png
+*.txt
+*.pt
+
 # Sphinx documentation
 docs/_build/
 

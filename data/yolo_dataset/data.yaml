@@ -1,0 +1,5 @@
+path: /home/user/Desktop/CODE/CS172/Project/OC_Atari/data/yolo_dataset
+train: images/train
+val: images/val
+nc: 11
+names: ['Barrier', 'Beam', 'Key', 'Key_HUD', 'Life', 'Player', 'Rope', 'Score', 'Skull', 'Sword', 'Sword_HUD']
