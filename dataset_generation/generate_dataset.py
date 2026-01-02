@@ -102,13 +102,13 @@ with open("models/path.in", "r") as f:
 # 支持 "1,2,3" 这种逗号分隔，也兼容换行/空格
 tokens = [t.strip() for t in content.replace("\n", ",").split(",") if t.strip() != ""]
 expert_action = [int(t) for t in tokens]
-expert_action = expert_action[:2000] *10  # 只取前 10000 个动作
+expert_action = expert_action[:1300] *15  # 只取前 20000 个动作
 
 print(f"[path.in] loaded {len(expert_action)} actions")
 # -----------------------------------------------------------
-
+steps=len(expert_action)
 # Generate 10,000 samples
-for i in tqdm(range(2000)):
+for i in tqdm(range(steps)):
     # 取当前帧（渲染出来的 RGB）
     frame = env.render()
     g = preprocess(frame)
