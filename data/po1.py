@@ -24,8 +24,8 @@ assert len(frames) == len(objs)
 classes = set()
 for obj_list in objs:
     for o in obj_list:
-        if getattr(o, "hud", False):  # ✅ 新增：跳过 HUD 类别
-            continue
+        # if getattr(o, "hud", False):  # ✅ 新增：跳过 HUD 类别
+        #     continue
         classes.add(o.__class__.__name__)   # 或 o.category，如果有
 classes = sorted(list(classes))
 name2id = {n:i for i,n in enumerate(classes)}
@@ -51,8 +51,8 @@ def save_one(i, split_name):
     label_path = os.path.join(LBL_DIR, split_name, f"{i:06d}.txt")
     lines = []
     for o in objs[i]:
-        if getattr(o, "hud", False):  # ✅ 新增：跳过 HUD 标注
-            continue
+        # if getattr(o, "hud", False):  # ✅ 新增：跳过 HUD 标注
+        #     continue
 
         cls_name = o.__class__.__name__
         cid = name2id[cls_name]
@@ -96,6 +96,9 @@ with open(yaml_path, "w") as f:
 print("Done. YOLO dataset at:", OUT_DIR)
 
 ''' 
+Classes: ['Barrier', 'Beam', 'Key', 'Key_HUD', 'Life', 
+'Player', 'Rope', 'Score', 'Skull', 'Sword', 'Sword_HUD']
+
 # train:
 yolo detect train \
   data=yolo_dataset/data.yaml \
