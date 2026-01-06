@@ -1,4 +1,4 @@
-from ocatari.core import OCAtari
+from perception.core import Perception
 import gymnasium as gym
 import ale_py
 gym.register_envs(ale_py)
@@ -19,7 +19,7 @@ else:
         content = file.read().strip()
         expert_action = [int(num.strip()) for num in content.split(',')]
     # length 3086
-env = OCAtari(
+env = Perception(
     "ALE/MontezumaRevenge-v5",
     mode="vision",
     hud=True,

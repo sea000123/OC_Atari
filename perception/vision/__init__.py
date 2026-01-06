@@ -1,12 +1,11 @@
 """
-RAM Extraction submodule of OCAtari
+RAM Processing submodule of Perception
 """
 
-from .game_objects import GameObject  # To avoid circular imports
 from . import *
+from .game_objects import GameObject  # To avoid circular imports
 from os.path import dirname, basename, isfile, join
 import glob
-
 modules = glob.glob(join(dirname(__file__), "*.py"))
 modules = [mod for mod in modules if not "_old" in mod]
 

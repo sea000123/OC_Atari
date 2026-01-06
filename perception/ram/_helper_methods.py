@@ -76,9 +76,9 @@ def get_iou(obj1, obj2):
     |iou_image|
 
     :param obj1: The bouding box of the detected object in (x, y, w, h) format
-    :type obj1: ocatari.ram.game_objects.GameObject or ocatari.vision.game_objects.GameObject
+    :type obj1: perception.ram.game_objects.GameObject or perception.vision.game_objects.GameObject
     :param obj2: The ground truth bouding box
-    :type obj2: ocatari.ram.game_objects.GameObject or ocatari.vision.game_objects.GameObject
+    :type obj2: perception.ram.game_objects.GameObject or perception.vision.game_objects.GameObject
     """
     # determine the (x, y)-coordinates of the intersection rectangle
     xA = max(obj1.x, obj2.x)

@@ -3,13 +3,13 @@ import numpy as np
 import gymnasium as gym
 from itertools import chain
 from termcolor import colored
-from ocatari.ram.extract_ram_info import (
+from perception.ram.extract_ram_info import (
     detect_objects_ram, init_objects, get_max_objects, get_object_state_size, get_class_dict)
-from ocatari.vision.extract_vision_info import detect_objects_vision
-from ocatari.vision.utils import mark_bb, to_rgba
-from ocatari.ram.game_objects import GameObject, ValueObject
-from ocatari.vision.game_objects import GameObject as GameObjectVision
-from ocatari.utils import draw_label, draw_arrow
+from perception.vision.extract_vision_info import detect_objects_vision
+from perception.vision.utils import mark_bb, to_rgba
+from perception.ram.game_objects import GameObject, ValueObject
+from perception.vision.game_objects import GameObject as GameObjectVision
+from perception.utils import draw_label, draw_arrow
 from gymnasium.error import NameNotFound
 import warnings
 
@@ -34,7 +34,7 @@ except ModuleNotFoundError:
     raise ModuleNotFoundError(
         '\npygame is required for human rendering. Try `pip install pygame`.')
 
-# List of available games for the OCAtari environment
+# List of available games for the Perception environment
 AVAILABLE_GAMES = [
     "Adventure", "AirRaid", "Alien", "Amidar", "Assault", "Asterix", "Asteroids", "Atlantis", "BankHeist", "BattleZone",
     "BeamRider", "Berzerk", "Bowling", "Boxing", "Breakout", "Carnival", "Centipede", "ChopperCommand", "CrazyClimber",
@@ -49,8 +49,8 @@ AVAILABLE_GAMES = [
 UPSCALE_FACTOR = 6
 
 
-# The OCAtari environment provides an interface to interact with Atari 2600 games through Gymnasium, enabling object tracking and analysis. This environment extends the functionality of traditional Atari environments by incorporating different object detection modes (RAM, vision, or both) and supports enhanced observation spaces for advanced tasks like reinforcement learning.
-class OCAtari(gym.Env):
+# The Perception environment provides an interface to interact with Atari 2600 games through Gymnasium, enabling object tracking and analysis. This environment extends the functionality of traditional Atari environments by incorporating different object detection modes (RAM, vision, or both) and supports enhanced observation spaces for advanced tasks like reinforcement learning.
+class Perception(gym.Env):
     """
     :param env_name: The name of the Atari gymnasium environment e.g. "Pong" or "PongNoFrameskip-v5"
     :type env_name: str
@@ -74,7 +74,7 @@ class OCAtari(gym.Env):
         game_name = env_name.split("/")[1].split("-")[0].split("No")[0].split("Deterministic")[
             0] if "ALE/" in env_name else env_name.split("-")[0].split("No")[0].split("Deterministic")[0]
         # if game_name[:4] not in [gn[:4] for gn in AVAILABLE_GAMES]:
-        #     raise ValueError(f"Game '{env_name}' not covered yet by OCAtari")
+        #     raise ValueError(f"Game '{env_name}' not covered yet by Perception")
 
         # Initialization of environment attributes
         # Store the name of the environment and game

@@ -1,13 +1,13 @@
-# appends parent path to syspath to make ocatari importable
+# appends parent path to syspath to make perception importable
 # like it would have been installed as a package
 '''
 python scripts/demo/demo_montezuma_revenge.py -p models/model_49750000
 python montezuma_revenge.py
 '''
 import matplotlib.pyplot as plt
-from ocatari.core import OCAtari
-from ocatari.vision.utils import mark_bb, make_darker
-from ocatari.utils import load_agent
+from perception.core import Perception
+from perception.vision.utils import mark_bb, make_darker
+from perception.utils import load_agent
 import torch
 import numpy as np
 import os
@@ -29,7 +29,7 @@ writer = imageio.get_writer(
     quality=8
 )  # quality 0-10
 # 关键：用 dqn observation（84x84 灰度 + 4 帧堆栈）
-env = OCAtari(
+env = Perception(
     game_name,
     mode=MODE,
     hud=HUD,

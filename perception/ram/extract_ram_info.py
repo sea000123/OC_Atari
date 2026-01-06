@@ -1,7 +1,7 @@
 import sys
 from termcolor import colored
 import numpy as np
-from ocatari.vision.game_objects import NoObject
+from perception.vision.game_objects import NoObject
 
 
 # parses MAX_NB* dicts, returns default init list of objects
