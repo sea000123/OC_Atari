@@ -1,16 +1,14 @@
 conda activate revenge2
-python data/generate_dataset.py \
-  -g ALE/MontezumaRevenge-v5 \
-  -m ram \
-  -hud\
-  -dqn
+python data/generate_dataset.py
 cd data 
-python po1.py
+# python po1.py # use vision result
+python process_both.py # use ram data
+
 yolo detect train \
   data=yolo_dataset/data.yaml \
-  model=yolov8n.pt \
+  model=yolov8s.pt \
   imgsz=160 \
-  epochs=100 \
+  epochs=80 \
   batch=64 \
   workers=4 \
   device=0

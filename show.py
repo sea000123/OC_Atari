@@ -14,7 +14,7 @@ MODEL_TAG = "train"
 
 # "yolo" / "ocatari" / "none"
 DETECTOR = "ocatari"
-# DETECTOR = "yolo"
+DETECTOR = "yolo"
 if DETECTOR == "ocatari":
     USE_OCATARI = True
 else:
@@ -42,7 +42,7 @@ with open('models/path.in', 'r') as file:
 # 2) 可选：加载 YOLO（只在 DETECTOR='yolo' 时）
 detector = None
 if USE_YOLO:
-    YOLO_WEIGHTS = "data/runs/detect/train/weights/best.pt"
+    YOLO_WEIGHTS = f"data/runs/detect/{MODEL_TAG}/weights/best.pt"
     detector = YOLO(YOLO_WEIGHTS)
 
 # 3) 创建环境
