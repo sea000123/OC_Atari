@@ -7,6 +7,9 @@ python dataset_generation/generate_dataset.py \
   -m ram \
   -hud\
   -dqn 
+问题：1. 四帧重复 2. 在po1.py中没有跳过hud 3. 直接复制expert action但是忘记reset env
+4. 用gpt对比一下就好了
+best result: expert_action = expert_action[:2000] # 只取前 2000 个动作
 '''
 import random
 # appends parent path to syspath to make ocatari importable
@@ -51,8 +54,7 @@ parser.add_argument("-dqn", "--dqn", action="store_true",
 opts = parser.parse_args()
 
 # Init the environment
-env = OCAtari(opts.game, mode="both", render_mode='rgb_array', hud=True,buffer_window_size=1)
-# env = OCAtari(opts.game, mode="both", render_mode='rgb_array', hud=True)
+env = OCAtari(opts.game, mode="both", render_mode='rgb_array', hud=True)
 observation, info = env.reset()
 
 SEED = 42
@@ -90,7 +92,7 @@ with open("models/path.in", "r") as f:
 # 支持 "1,2,3" 这种逗号分隔，也兼容换行/空格
 tokens = [t.strip() for t in content.replace("\n", ",").split(",") if t.strip() != ""]
 expert_action = [int(t) for t in tokens]
-expert_action = expert_action[:1000] # 只取前 20000 个动作
+expert_action = expert_action[:2000] # 只取前 2000 个动作
 
 print(f"[path.in] loaded {len(expert_action)} actions")
 # -----------------------------------------------------------

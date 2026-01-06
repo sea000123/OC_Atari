@@ -1,7 +1,8 @@
 conda activate revenge2
 python data/generate_dataset.py
 cd data 
-# python po1.py # use vision result
+# python data/generate_dataset_old.py 
+# python po1.py # use vision result, it can produce best result as "train1" model
 python process_both.py # use ram data
 
 yolo detect train \
