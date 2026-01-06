@@ -34,18 +34,15 @@ if DETECTOR == "perception" and not USE_PERCPTRON:
 USE_YOLO = (DETECTOR == "yolo")
 USE_PERCPTRON_OBJECTS = (DETECTOR == "perception")
 
-# 1) 读取动作序列
 with open('models/path.in', 'r') as file:
     content = file.read().strip()
     expert_action = [int(num.strip()) for num in content.split(',')]
 
-# 2) 可选：加载 YOLO（只在 DETECTOR='yolo' 时）
 detector = None
 if USE_YOLO:
     YOLO_WEIGHTS = "data/runs/detect/train/weights/best.pt"
     detector = YOLO(YOLO_WEIGHTS)
 
-# 3) 创建环境
 if USE_PERCPTRON:
     env = Perception(
         "ALE/MontezumaRevenge-v5",
@@ -64,7 +61,6 @@ obs, info = env.reset()
 frame = env.render()
 h, w, _ = frame.shape
 
-# 4) 视频写入器
 os.makedirs("videos", exist_ok=True)
 out_path = f"videos/demo_{MODEL_TAG}_{STEPS}steps_{DETECTOR}.mp4"
 
@@ -75,13 +71,11 @@ video = cv2.VideoWriter(
     (w, h)
 )
 
-# 5) 颜色函数（YOLO 用）
 def color_for_cls(cls_id: int):
     rng = np.random.default_rng(cls_id + 12345)
     c = rng.integers(60, 256, size=3)
     return int(c[0]), int(c[1]), int(c[2])
 
-# 6) Perception objects 绘制函数（只在 DETECTOR='perception' 用）
 def draw_perception_objects(frame_rgb, env):
     for obj in getattr(env, "objects", []):
         try:
@@ -105,7 +99,6 @@ def draw_perception_objects(frame_rgb, env):
         except Exception:
             continue
 
-# 7) 实时窗口
 WINDOW_NAME = "Live Demo (q to quit)"
 cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
 
@@ -118,7 +111,6 @@ try:
 
         frame = env.render()  # RGB
 
-        # ✅ 互斥：只会走其中一个分支
         if USE_PERCPTRON_OBJECTS:
             draw_perception_objects(frame, env)
 
@@ -156,7 +148,6 @@ try:
 
         bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
-        # 实时显示
         cv2.imshow(WINDOW_NAME, bgr)
         key = cv2.waitKey(int(1000 / FPS)) & 0xFF
         if key == ord('q'):
@@ -166,7 +157,6 @@ try:
             print("[INFO] Window closed.")
             break
 
-        # 写视频
         video.write(bgr)
 
         if terminated or truncated:
